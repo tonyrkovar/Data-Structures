@@ -77,8 +77,8 @@ class DoublyLinkedList:
     def remove_from_head(self):
         if not self.head:
             return None
-        self.delete(self.head)
         value = self.head.value
+        self.delete(self.head)
         return value
 
     """Wraps the given value in a ListNode and inserts it 
@@ -93,13 +93,14 @@ class DoublyLinkedList:
         else:
             # There is currently a list
             self.tail.insert_after(value)
-            self.tail = self.tail.next
+            tail = self.tail = self.tail.next
+            return tail
 
     """Removes the List's current tail node, making the 
     current tail's previous node the new tail of the List.
     Returns the value of the removed Node."""
     def remove_from_tail(self):
-        if not self.tail:
+        if self.length == 0:
             print('There is nothing in this list')
             return None
         value = self.tail.value
