@@ -26,7 +26,7 @@ class LRUCache:
 
     def get(self, key):
         if key not in self.cache:
-            print(f"key {key} is not in the cache")
+            print(f"{key} is not a key in the cache")
             return None
         value = self.cache[key].value
         self.dll.move_to_front(self.cache[key])
