@@ -28,10 +28,10 @@ class LRUCache:
         if key not in self.cache:
             print(f"key {key} is not in the cache")
             return None
-        current = self.dll.head
-        value = self.cache[key][1]
-
-        return value
+        value = self.cache[key].value
+        self.dll.move_to_front(self.cache[key])
+        self.cache[key] = self.cache.pop(key)
+        return value[1]
 
     """
     Adds the given key-value pair to the cache. 
@@ -49,16 +49,14 @@ class LRUCache:
     def set(self, key, value):
         value_tup = (key, value)
         if key in self.cache:
-            current = self.dll.head
-            while not current.value[0] == key:
-                current = current.next
-            current.delete()
-            self.cache[key] = self.dll.add_to_head(value_tup)
+            self.cache[key].value = value_tup
+            self.cache[key] = self.dll.move_to_front(self.cache[key])
         else:
             if self.cache_size < self.limit:
                 self.cache_size += 1
                 self.cache[key] = self.dll.add_to_head(value_tup)
             else:
                 self.cache[key] = self.dll.add_to_head(value_tup)
-                self.dll.remove_from_tail()
                 self.cache.pop(self.dll.tail.value[0])
+                self.dll.remove_from_tail()
+
