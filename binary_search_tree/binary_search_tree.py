@@ -1,8 +1,8 @@
 import sys
 
 sys.path.append("../queue_and_stack")
-# from dll_queue import Queue
-# from dll_stack import Stack
+from dll_queue import Queue
+from dll_stack import Stack
 
 
 class BinarySearchTree:
@@ -45,7 +45,6 @@ class BinarySearchTree:
             elif target > current_value:
                 current_value = self.right
                 return self.right.contains(target)
-
         else:
             return return_value
 
@@ -75,12 +74,40 @@ class BinarySearchTree:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        if node:
+            queue = Queue()
+            queue.enqueue(node)
+        while queue.len():
+            current_node = queue.dequeue()
+            print(current_node.value)
+            if current_node.right:
+                queue.enqueue(current_node.right)
+            if current_node.left:
+                queue.enqueue(current_node.left)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        current_node = node
+        stack = Stack()
+        stack.push(current_node)
+        while stack.size > 0:
+            current_node = stack.pop()
+            if current_node.right:
+                stack.push(current_node.right)
+            if current_node.left:
+                stack.push(current_node.left)
+            print(current_node.value)
+
+        return current_node
+
+    # for DTF traversal we want to start at the root(first node) and traverse the tree
+    # I will go left for this traversal
+    # At the root, push the root into a temp variable
+    # Check the right node if it exists, push it into the stack
+    # Then check the left and if it exists push it to the stack
+    # Print the current node's value
+    # Pop the next node from the stack, repeat
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
@@ -92,4 +119,20 @@ class BinarySearchTree:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
+        # print(self.value)
+        # if self.left:
+        #     self.left.for_each(cb)
+        # if self.right:
+        #     self.right.for_each(cb)
 
+
+# test = BinarySearchTree(1)
+# test.insert(8)
+# test.insert(5)
+# test.insert(7)
+# test.insert(6)
+# test.insert(3)
+# test.insert(4)
+# test.insert(2)
+
+# test.bft_print(test)
