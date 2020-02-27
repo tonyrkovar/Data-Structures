@@ -34,23 +34,16 @@ class BinarySearchTree:
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        print(target, f"this is your target value")
         current_value = self.value
         return_value = False
         if target == current_value:
-            print(f"BREAK {current_value}, {target}")
             return True
         elif not self.right == None and not self.left == None:
-            # if self.right == None and self.left == None:
-            #     print(f"Element not in tree")
-            #     return False
             if target < current_value:
                 current_value = self.left
-                print(f"RECURSION LEFT {current_value.value}, {target}")
                 return self.left.contains(target)
             elif target > current_value:
                 current_value = self.right
-                print(f"RIGHT RECURSION {current_value.value}, {target}")
                 return self.right.contains(target)
 
         else:
@@ -58,12 +51,19 @@ class BinarySearchTree:
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        if self.right == None:
+            return self.value
+        elif self.value < self.right.value:
+            return self.right.get_max()
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        pass
+        cb(self.value)
+        if self.right:
+            self.right.for_each(cb)
+        if self.left:
+            self.left.for_each(cb)
 
     # DAY 2 Project -----------------------
 
